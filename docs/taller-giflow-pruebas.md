@@ -1,86 +1,105 @@
-# Evaluacion de tecnicas de caja negra
-## Sistema: Plataforma de gestion de eventos universitarios
+# Documento de Pruebas
 
-Funcionalidades principales
-- RF-01 Registro de Estudiante (Edad)
-- RF-02 Código de Estudiante
-- RF-03 Inscripción a Evento
+## 1. Descripción del Sistema
 
-## RF-01 Registro de Estudiante (Edad)
-El sistema debe permitir el registro de estudiantes cuya edad esté entre 16 y 65 años inclusive:
-15
-16
-17
-64
-65
-66
+La Plataforma de Gestión de Eventos Universitarios es un sistema que permite administrar la participación de estudiantes en eventos académicos organizados por la universidad.
 
-- Tecnica de caja negra utilizada es tecnica de valores limites
+Las principales funcionalidades del sistema son:
 
-- Justificacion de tecnica
-El analisis de valores limites se utiliza cuando el requerimiento establece de forma explicita un rango.
+- Registro de estudiantes en la plataforma.
+- Validación del código estudiantil.
+- Inscripción de estudiantes a eventos disponibles.
 
-- Casos de prueba 
-|ID | EDAD | Resultado esperado|
-|CP-01| 15 | Rechazado |
-|CP-02| 16 | permitido|
-|CP-03| 17 | permitido|
-|CP-04| 65 | permitido|
-|CP-05| 66 | rechazado|
+El objetivo de este documento es diseñar y documentar pruebas utilizando técnicas de caja negra, con el fin de verificar que el sistema cumpla con los requerimientos funcionales establecidos.
 
-##Validacion
-En este caso los casos de pruebas cubririan:
--Valor inferior fuera del rango
--Limite superior fuera del rango
--Limite superior permitido
--valor inferior dentro del limite 
+---
 
-# Personas 3 y 4 → RF-02 Código de Estudiante
+# 2. Requerimientos a Evaluar
 
-## Análisis del Requerimiento
+### RF-01 Registro de Estudiante (Edad)
 
-El código del estudiante debe cumplir las siguientes reglas:
+El sistema debe permitir el registro de estudiantes cuya edad esté entre 16 y 65 años inclusive.
 
-- Tener exactamente 8 caracteres
-- Iniciar con la letra E
-- Los 7 caracteres restantes deben ser numéricos
+---
+
+### RF-02 Código de Estudiante
+
+El código del estudiante debe cumplir las siguientes condiciones:
+
+- Tener exactamente 8 caracteres.
+- Iniciar con la letra E.
+- Los 7 caracteres restantes deben ser numéricos.
 
 Ejemplo válido:
 
 E1234567
 
-Cualquier código que no cumpla estas reglas debe ser rechazado.
+---
+
+### RF-03 Inscripción a Evento
+
+Un estudiante podrá inscribirse a un evento únicamente si:
+
+- Está registrado en el sistema.
+- El evento tiene cupos disponibles.
+- No está previamente inscrito en el evento.
+
+Si alguna de estas condiciones no se cumple, el sistema debe **rechazar la inscripción**.
 
 ---
 
-## Técnica de Caja Negra Seleccionada
+# 3. Técnicas de Prueba Aplicadas
 
-**Partición de Equivalencia**
+Para evaluar los requerimientos del sistema se aplicaron diferentes técnicas de **pruebas de caja negra**.
 
----
+### RF-01 Registro de Edad
 
-## Justificación de la Técnica
+**Técnica aplicada:** Análisis de Valores Límite.
 
-La técnica de partición de equivalencia permite dividir las entradas posibles en **clases de equivalencia**, donde todos los valores de una clase producen el mismo comportamiento en el sistema.
-
-En este caso se identifican:
-
-- una clase válida
-- varias clases inválidas
-
-Esto permite reducir la cantidad de pruebas necesarias manteniendo una buena cobertura.
+**Justificación:**  
+El requerimiento establece un rango de valores numéricos (16 a 65). La técnica de análisis de valores límite permite verificar el comportamiento del sistema en los extremos del rango, donde suelen presentarse errores de validación.
 
 ---
 
-## Casos de Prueba
+### RF-02 Código de Estudiante
+
+**Técnica aplicada:** Partición de Equivalencia.
+
+**Justificación:**  
+El requerimiento define reglas estructurales del código. La partición de equivalencia permite dividir las entradas en clases válidas e inválidas, reduciendo el número de pruebas necesarias sin perder cobertura.
+
+---
+
+### RF-03 Inscripción a Evento
+
+**Técnica aplicada:** Tabla de Decisión.
+
+**Justificación:**  
+El comportamiento del sistema depende de múltiples condiciones lógicas. La tabla de decisión permite evaluar todas las combinaciones posibles entre dichas condiciones para garantizar que el sistema responda correctamente.
+
+---
+
+# 4. Casos de Prueba Diseñados
+
+## RF-01 Registro de Estudiante (Edad)
+
+| ID | Edad | Resultado Esperado |
+|----|------|-------------------|
+| CP-01 | 15 | Registro rechazado |
+| CP-02 | 16 | Registro permitido |
+| CP-03 | 30 | Registro permitido |
+| CP-04 | 65 | Registro permitido |
+| CP-05 | 66 | Registro rechazado |
+
+---
+
+## RF-02 Código de Estudiante
 
 ### Casos válidos
 
 | ID | Código | Resultado Esperado |
 |----|--------|-------------------|
 | CP-06 | E1234567 | Código aceptado |
-
----
 
 ### Casos inválidos
 
@@ -94,54 +113,10 @@ Esto permite reducir la cantidad de pruebas necesarias manteniendo una buena cob
 
 ---
 
-## Verificación de Cobertura
+## RF-03 Inscripción a Evento
 
-Los casos de prueba cubren las siguientes clases de equivalencia:
-
-- código con prefijo incorrecto
-- código con longitud menor a la requerida
-- código con longitud mayor a la requerida
-- código con caracteres inválidos
-- código completamente válido
-
-Esto asegura que todas las reglas de validación del código sean verificadas.
-
----
-
-# Personas 5 y 6 → RF-03 Inscripción a Evento
-
-## Análisis de las Condiciones
-
-Un estudiante puede inscribirse a un evento solo si se cumplen simultáneamente las siguientes condiciones:
-
-1. El estudiante está registrado
-2. El evento tiene cupos disponibles
-3. El estudiante no está inscrito previamente
-
-Si alguna de estas condiciones no se cumple, el sistema debe rechazar la inscripción.
-
-Debido a que existen múltiples condiciones lógicas, es necesario evaluar todas sus combinaciones posibles.
-
----
-
-## Técnica de Caja Negra Seleccionada
-
-**Tabla de Decisión**
-
----
-
-## Justificación de la Técnica
-
-La técnica de tabla de decisión se utiliza cuando el comportamiento del sistema depende de varias condiciones lógicas.
-
-Esta técnica permite analizar todas las combinaciones posibles de las condiciones para verificar que el sistema responda correctamente en cada escenario.
-
---- 
-
-## Casos de Prueba (Tabla de Decisión)
-
-| Caso | Estudiante Registrado | Cupos Disponibles | Ya Inscrito | Resultado Esperado |
-|-----|----------------------|------------------|-------------|-------------------|
+| Caso | Registrado | Cupos Disponibles | Ya Inscrito | Resultado Esperado |
+|-----|------------|------------------|------------|-------------------|
 | CP-12 | Sí | Sí | No | Inscripción permitida |
 | CP-13 | Sí | No | No | Inscripción rechazada |
 | CP-14 | No | Sí | No | Inscripción rechazada |
@@ -153,3 +128,47 @@ Esta técnica permite analizar todas las combinaciones posibles de las condicion
 
 ---
 
+# 5. Trazabilidad
+
+La trazabilidad permite relacionar los requerimientos con los casos de prueba diseñados.
+
+| Requerimiento | Casos de Prueba |
+|---------------|----------------|
+| RF-01 Registro de Edad | CP-01, CP-02, CP-03, CP-04, CP-05 |
+| RF-02 Código de Estudiante | CP-06, CP-07, CP-08, CP-09, CP-10, CP-11 |
+| RF-03 Inscripción a Evento | CP-12, CP-13, CP-14, CP-15, CP-16, CP-17, CP-18, CP-19 |
+
+Esto asegura que **todos los requerimientos tienen al menos un caso de prueba asociado**.
+
+---
+
+# 6. Gestión de Versiones (GitFlow)
+
+Para el control de versiones del proyecto se utilizó la estrategia **GitFlow**, la cual permite organizar el desarrollo y las pruebas del sistema mediante ramas específicas.
+
+Las ramas utilizadas fueron:
+
+### main
+Contiene la versión estable del proyecto.
+
+### develop
+Integra los cambios realizados durante el desarrollo y pruebas.
+
+### feature
+Se utilizan para desarrollar funcionalidades específicas o trabajar en requerimientos particulares.
+
+Ejemplo:
+
+feature/RF-01-pruebas-edad  
+feature/RF-02-validacion-codigo  
+feature/RF-03-inscripcion-eventos  
+
+Flujo de trabajo:
+
+1. Crear una rama feature desde develop.
+2. Implementar cambios o diseño de pruebas.
+3. Realizar commit de los cambios.
+4. Hacer merge hacia develop.
+5. Una vez validado el sistema, realizar merge hacia main.
+
+Esto permite mantener un desarrollo organizado y facilitar el trabajo colaborativo entre los integrantes del equipo.

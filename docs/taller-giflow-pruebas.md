@@ -130,7 +130,7 @@ El comportamiento del sistema depende de múltiples condiciones lógicas. La tab
 
 # 5. Trazabilidad
 
-La trazabilidad permite relacionar los requerimientos con los casos de prueba diseñados.
+
 
 | Requerimiento | Casos de Prueba |
 |---------------|----------------|
@@ -138,7 +138,6 @@ La trazabilidad permite relacionar los requerimientos con los casos de prueba di
 | RF-02 Código de Estudiante | CP-06, CP-07, CP-08, CP-09, CP-10, CP-11 |
 | RF-03 Inscripción a Evento | CP-12, CP-13, CP-14, CP-15, CP-16, CP-17, CP-18, CP-19 |
 
-Esto asegura que **todos los requerimientos tienen al menos un caso de prueba asociado**.
 
 ---
 
@@ -155,10 +154,7 @@ Contiene la versión estable del proyecto.
 Integra los cambios realizados durante el desarrollo y pruebas.
 
 ### feature
-Se utilizan para desarrollar funcionalidades específicas o trabajar en requerimientos particulares.
-
-Ejemplo:
-
+En este caso como estoy solo solamente hacia commit por cada RF
 feature/RF-01-pruebas-edad  
 feature/RF-02-validacion-codigo  
 feature/RF-03-inscripcion-eventos  
@@ -171,4 +167,3 @@ Flujo de trabajo:
 4. Hacer merge hacia develop.
 5. Una vez validado el sistema, realizar merge hacia main.
 
-Esto permite mantener un desarrollo organizado y facilitar el trabajo colaborativo entre los integrantes del equipo.

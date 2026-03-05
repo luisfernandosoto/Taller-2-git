@@ -6,7 +6,7 @@ Funcionalidades principales
 - RF-02 Código de Estudiante
 - RF-03 Inscripción a Evento
 
-##RF-01 Registro de Estudiante (Edad)
+## RF-01 Registro de Estudiante (Edad)
 El sistema debe permitir el registro de estudiantes cuya edad esté entre 16 y 65 años inclusive:
 15
 16
@@ -15,12 +15,12 @@ El sistema debe permitir el registro de estudiantes cuya edad esté entre 16 y 6
 65
 66
 
--Tecnica de caja negra utilizada es tecnica de valores limites
+- Tecnica de caja negra utilizada es tecnica de valores limites
 
--Justificacion de tecnica
+- Justificacion de tecnica
 El analisis de valores limites se utiliza cuando el requerimiento establece de forma explicita un rango.
 
--Casos de prueba 
+- Casos de prueba 
 |ID | EDAD | Resultado esperado|
 |CP-01| 15 | Rechazado |
 |CP-02| 16 | permitido|
@@ -105,6 +105,51 @@ Los casos de prueba cubren las siguientes clases de equivalencia:
 - código completamente válido
 
 Esto asegura que todas las reglas de validación del código sean verificadas.
+
+---
+
+# Personas 5 y 6 → RF-03 Inscripción a Evento
+
+## Análisis de las Condiciones
+
+Un estudiante puede inscribirse a un evento solo si se cumplen simultáneamente las siguientes condiciones:
+
+1. El estudiante está registrado
+2. El evento tiene cupos disponibles
+3. El estudiante no está inscrito previamente
+
+Si alguna de estas condiciones no se cumple, el sistema debe rechazar la inscripción.
+
+Debido a que existen múltiples condiciones lógicas, es necesario evaluar todas sus combinaciones posibles.
+
+---
+
+## Técnica de Caja Negra Seleccionada
+
+**Tabla de Decisión**
+
+---
+
+## Justificación de la Técnica
+
+La técnica de tabla de decisión se utiliza cuando el comportamiento del sistema depende de varias condiciones lógicas.
+
+Esta técnica permite analizar todas las combinaciones posibles de las condiciones para verificar que el sistema responda correctamente en cada escenario.
+
+--- 
+
+## Casos de Prueba (Tabla de Decisión)
+
+| Caso | Estudiante Registrado | Cupos Disponibles | Ya Inscrito | Resultado Esperado |
+|-----|----------------------|------------------|-------------|-------------------|
+| CP-12 | Sí | Sí | No | Inscripción permitida |
+| CP-13 | Sí | No | No | Inscripción rechazada |
+| CP-14 | No | Sí | No | Inscripción rechazada |
+| CP-15 | Sí | Sí | Sí | Inscripción rechazada |
+| CP-16 | No | No | No | Inscripción rechazada |
+| CP-17 | No | Sí | Sí | Inscripción rechazada |
+| CP-18 | Sí | No | Sí | Inscripción rechazada |
+| CP-19 | No | No | Sí | Inscripción rechazada |
 
 ---
 
